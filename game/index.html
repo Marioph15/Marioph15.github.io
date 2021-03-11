@@ -54,6 +54,13 @@ var leftHand = new THREE.Mesh(hand,cover);
     leftFoot.position.set(-75,-125,0)
     scene.add(leftFoot)
     
+    // cabeza
+    var cabeza = new THREE.SphereGeometry(70);
+    var cover = new THREE.MeshNormalMaterial(flat);
+    var cabezon = new THREE.Mesh(cabeza,cover);
+    cabezon.position.set(0,100,0)
+    scene.add(cabezon);
+    
     
     
     
