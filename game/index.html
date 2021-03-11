@@ -34,7 +34,7 @@ var rightHand = new THREE.Mesh(hand,cover);
     
     
 //mano izquierda
-var leftHand = new THREE.Mesh(righthand,cover);
+var leftHand = new THREE.Mesh(hand,cover);
     leftHand.position.set(150,0,0)
     scene.add(leftHand);
     
@@ -42,10 +42,17 @@ var leftHand = new THREE.Mesh(righthand,cover);
     
     var foot=new THREE.SphereGeometry(50);
     
-    //pie izquierdo
+    //pie deerecho
    
+    var rightFoot = new THREE.Mesh(hand,cover)
+    rightFoot.position.set(75,-125,0)
+    scene.add(rightFoot)
     
+    //pie izquierdo
     
+     var leftFoot = new THREE.Mesh(hand,cover)
+    leftFoot.position.set(-75,-125,0)
+    scene.add(leftFoot)
     
     
     
