@@ -30,13 +30,13 @@ var hand = new THREE.SphereGeometry(50);
 var cover = new THREE.MeshNormalMaterial(flat);
 var rightHand = new THREE.Mesh(hand,cover);
     rightHand.position.set(-150,0,0)
-    scene.add(rightHand);
+    avatar.add(rightHand);
     
     
 //mano izquierda
 var leftHand = new THREE.Mesh(hand,cover);
     leftHand.position.set(150,0,0)
-    scene.add(leftHand);
+    avatar.add(leftHand);
     
     //pie
     
@@ -46,21 +46,28 @@ var leftHand = new THREE.Mesh(hand,cover);
    
     var rightFoot = new THREE.Mesh(hand,cover)
     rightFoot.position.set(75,-125,0)
-    scene.add(rightFoot)
+    avatar.add(rightFoot)
     
     //pie izquierdo
     
      var leftFoot = new THREE.Mesh(hand,cover)
     leftFoot.position.set(-75,-125,0)
-    scene.add(leftFoot)
+    avatar.add(leftFoot)
     
     // cabeza
     var cabeza = new THREE.SphereGeometry(70);
     var cover = new THREE.MeshNormalMaterial(flat);
     var cabezon = new THREE.Mesh(cabeza,cover);
     cabezon.position.set(0,100,0)
-    scene.add(cabezon);
+    avatar.add(cabezon);
     
+    function animate() {
+        requestAnimationFrame(animate);
+        avatar.rotation.z =avatar.rotation.z + 0.01;
+        renderer.render(scene, camera);
+    }
+    
+    animate();
     
     
     
