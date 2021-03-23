@@ -69,9 +69,16 @@ var leftHand = new THREE.Mesh(hand,cover);
     
     animate();
     
+    var isCartwheeling =false;
+    function animate(){
+        requestAnimationFrame(animate);
+        if (isCartwheeling) {
+            avatar.rotation.z = avatar.rotation.z + 0.1;
+        }
+        renderer.render(scene,camera);
+    }
     
-    
-    
+    animate()
     
     
     
