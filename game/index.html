@@ -61,15 +61,8 @@ var leftHand = new THREE.Mesh(hand,cover);
     cabezon.position.set(0,100,0)
     avatar.add(cabezon);
     
-    function animate() {
-        requestAnimationFrame(animate);
-        avatar.rotation.z =avatar.rotation.z + 0.01;
-        renderer.render(scene, camera);
-    }
     
-    animate();
-    
-    var isCartwheeling =false;
+    var isCartwheeling = false;
     function animate(){
         requestAnimationFrame(animate);
         if (isCartwheeling) {
@@ -78,11 +71,48 @@ var leftHand = new THREE.Mesh(hand,cover);
         renderer.render(scene,camera);
     }
     
-    animate()
+    animate();
     
+        
+   document.addEventListener('keydown',gestionarTecla);
+    function gestionarTecla(event){
+        var codigo = event.code;
+        if (codigo == 'ArrowLeft') avatar.position.x -= 5;
+        if (codigo == 'ArrowRight') avatar.position.x += 5;
+        if (codigo == 'ArrowUp') avatar.position.z -= 5;
+        if (codigo == 'ArrowDown') avatar.position.z += 5;
+    }
     
+    function animate(){
+        requestAnimationFrame(animate);
+        avatar.rotation.z = avatar.rotation.z + 0.05;
+        renderer.render(scene,camera);
+    }
+
     
+    animate();
+    // CREAR TRONCO
+   function makeTreeAt(x,z){
+       var trunk = new THREE.Mesh(
+       new THREE.CylinderGeometry(50,50, 200),
+       new THREE.MeshBasicMaterial({color:"marron"})
+       );
+       var top = new TREE.Meshh(
+       new THREE.SphereGeometry(150),
+       new THREE.MeshBasicMaterial({color'verde'})
+       );
+       
+       top.position.y = 175;
+       trunk.add(top);
+       
+       trunk.position.set(x,-75,z);
+       scene.add (trunk);
+   }
     
+    makeTreeAt( 500, 0);
+    makeTreeAt( -500, 0);
+    makeTreeAt( 750, -1000);
+    makeTreeAt( -750, -1000);
     
     
   // Now, show what the camera sees on the screen:
