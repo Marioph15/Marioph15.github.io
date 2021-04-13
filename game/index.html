@@ -10,7 +10,8 @@
   // The "camera" is what sees the stuff:
   var aspectRatio = window.innerWidth / window.innerHeight;
   var camera = new THREE.PerspectiveCamera(75, aspectRatio, 1, 10000);
-  camera.position.z = 500;
+  camera.position.z = 3000;
+  camera.position.y = 4000;
   scene.add(camera);
 
   // The "renderer" draws what the camera sees onto the screen:
@@ -92,29 +93,36 @@ var leftHand = new THREE.Mesh(hand,cover);
     
     animate();
     // CREAR TRONCO
-   function makeTreeAt(x,z){
-       var trunk = new THREE.Mesh(
-       new THREE.CylinderGeometry(50,50, 200),
-       new THREE.MeshBasicMaterial({color:"marron"})
-       );
-       var top = new TREE.Meshh(
-       new THREE.SphereGeometry(150),
-       new THREE.MeshBasicMaterial({color:"verde"})
-       );
+   function CrearArbol(x,z){
+    var tronco = new THREE.CylinderGeometry(50,50, 200);
+    var marron = new THREE.MeshBasicMaterial({color:'sienna'});
+       var tronco_marron =new THREE.Mesh(tronco,marron);
+   
+var copa = new THREE.SphereGeometry(150);
+var verde= new THREE.MeshBasicMaterial({color:"forestgreen"});
+var copa_verde =new THREE.Mesh (copa,verde);
        
-       top.position.y = 175;
-       trunk.add(top);
        
-       trunk.position.set(x,-75,z);
-       scene.add (trunk);
+       copa_verde.position.y = 175;
+       tronco_marron.add(copa_verde);
+       tronco_marron.position.set(x,-75,z);
+       scene.add (tronco_marron);
    }
-    
-    makeTreeAt( 500, 0);
-    makeTreeAt( -500, 0);
-    makeTreeAt( 750, -1000);
-    makeTreeAt( -750, -1000);
+   // Crear un area rectangular donde hayan arboles plantados
+    function crearCampoArboles
     
     
+    for(var x=-4000;x<=4000;x=x+400){
+        for(var z=-4000;z<4000;z=z+400)
+        CrearArbol(x,z);
+   }
+    crearTreeAt( 500, 0);
+    crearcrearcrearTreeAt( -500, 0);
+    crearcrearTreeAt( 750, -1000);
+    crearTreeAt( -750, -1000);
+    
+    // vista camara campo abierto
+    camera.lookAt(avatar.position);
   // Now, show what the camera sees on the screen:
   renderer.render(scene, camera);
 </script>
