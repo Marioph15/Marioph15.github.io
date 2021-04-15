@@ -109,17 +109,19 @@ var copa_verde =new THREE.Mesh (copa,verde);
        scene.add (tronco_marron);
    }
    // Crear un area rectangular donde hayan arboles plantados
-    function crearCampoArboles
     
     
-    for(var x=-4000;x<=4000;x=x+400){
-        for(var z=-4000;z<4000;z=z+400)
-        CrearArbol(x,z);
-   }
-    crearTreeAt( 500, 0);
-    crearcrearcrearTreeAt( -500, 0);
-    crearcrearTreeAt( 750, -1000);
-    crearTreeAt( -750, -1000);
+   function crearCampoArboles(minimo_x,maximo_x,minimo_z,maximo_z,distancia_arboles){
+    for (var x=minimo_x; x<=maximo_x; x= x+distancia_arboles){
+    for (var z=minimo_z; z<=maximo_z; z= z+distancia_arboles){
+         CrearArbol(x,z);  
+    }
+}
+    } 
+    crearCampoArboles(-2000,2000,-2000,2000,500)
+    
+    
+    
     
     // vista camara campo abierto
     camera.lookAt(avatar.position);
