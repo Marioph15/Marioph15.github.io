@@ -10,8 +10,8 @@
   // The "camera" is what sees the stuff:
   var aspectRatio = window.innerWidth / window.innerHeight;
   var camera = new THREE.PerspectiveCamera(75, aspectRatio, 1, 10000);
-  camera.position.z = 3000;
-  camera.position.y = 4000;
+  camera.position.z = 500;
+  camera.position.y = 400;
   scene.add(camera);
 
   // The "renderer" draws what the camera sees onto the screen:
@@ -20,11 +20,17 @@
   document.body.appendChild(renderer.domElement);
 
   // ******** START CODING ON THE NEXT LINE ********
-
+  //marcador
+    var marcador =new THREE.Object3D();
+    scene.add(marcador)
+  //cuerpo
 var body = new THREE.SphereGeometry(100);
 var cover = new THREE.MeshNormalMaterial(flat);
 var avatar = new THREE.Mesh(body,cover);
-    scene.add(avatar);
+   // avatar.add(camera);
+   // scene.add(avatar);
+    marcador.add (avatar);
+    marcador.add (camera);
 
 //mano derecha
 var hand = new THREE.SphereGeometry(50);
@@ -67,7 +73,7 @@ var leftHand = new THREE.Mesh(hand,cover);
     function animate(){
         requestAnimationFrame(animate);
         if (isCartwheeling) {
-            avatar.rotation.z = avatar.rotation.z + 0.1;
+            avatar.rotation.z = avatar.rotation.z + 0.01;
         }
         renderer.render(scene,camera);
     }
@@ -78,10 +84,10 @@ var leftHand = new THREE.Mesh(hand,cover);
    document.addEventListener('keydown',gestionarTecla);
     function gestionarTecla(event){
         var codigo = event.code;
-        if (codigo == 'ArrowLeft') avatar.position.x -= 5;
-        if (codigo == 'ArrowRight') avatar.position.x += 5;
-        if (codigo == 'ArrowUp') avatar.position.z -= 5;
-        if (codigo == 'ArrowDown') avatar.position.z += 5;
+        if (codigo == 'ArrowLeft') marcador.position.x -= 5;
+        if (codigo == 'ArrowRight') marcador.position.x += 5;
+        if (codigo == 'ArrowUp') marcador.position.z -= 5;
+        if (codigo == 'ArrowDown') marcador.position.z += 5;
     }
     
     function animate(){
