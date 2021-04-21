@@ -84,10 +84,11 @@ var leftHand = new THREE.Mesh(hand,cover);
    document.addEventListener('keydown',gestionarTecla);
     function gestionarTecla(event){
         var codigo = event.code;
-        if (codigo == 'ArrowLeft') marcador.position.x -= 5;
-        if (codigo == 'ArrowRight') marcador.position.x += 5;
-        if (codigo == 'ArrowUp') marcador.position.z -= 5;
-        if (codigo == 'ArrowDown') marcador.position.z += 5;
+        if (codigo == 'ArrowLeft') marcador.rotation.y -= 0.01;
+        if (codigo == 'ArrowRight') marcador.rotation.y += 0.01;
+        if (codigo == 'ArrowUp') marcador.position.z -= 20;
+        if (codigo == 'ArrowDown') marcador.position.z += 20;
+
     }
     
     function animate(){
