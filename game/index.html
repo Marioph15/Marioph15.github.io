@@ -73,7 +73,7 @@ var leftHand = new THREE.Mesh(hand,cover);
     function animate(){
         requestAnimationFrame(animate);
         if (isCartwheeling) {
-            avatar.rotation.z = avatar.rotation.z + 0.01;
+            avatar.rotation.z = avatar.rotation.z + 1;
         }
         renderer.render(scene,camera);
     }
@@ -81,15 +81,33 @@ var leftHand = new THREE.Mesh(hand,cover);
     animate();
     
         
-   document.addEventListener('keydown',gestionarTecla);
-    function gestionarTecla(event){
-        var codigo = event.code;
-        if (codigo == 'ArrowLeft') marcador.rotation.y -= 0.01;
-        if (codigo == 'ArrowRight') marcador.rotation.y += 0.01;
-        if (codigo == 'ArrowUp') marcador.position.z -= 20;
-        if (codigo == 'ArrowDown') marcador.position.z += 20;
-
+   document.addEventListener('keydown', sendKeyDown);
+function sendKeyDown(event){
+  var code = event.code;
+    if (code == 'ArrowLeft') marcador.rotation.y = marcador.rotation.y -= 0.05;
+    if (code == 'ArrowRight') marcador.rotation.y = marcador.rotation.y += 0.05;
+    if (code == 'ArrowUp') avanzar(marcador,marcador.rotation.y , false);
+    if (code == 'ArrowDown') avanzar(marcador,marcador.rotation.y, true)
+   
+    if (code == 'KeyC')isCartwheeling = !isCartwheeling;
+    if (code == 'KeyF') isFlipping = !isFlipping;
+}
+   
+function avanzar(objeto,radianes,atras = false){
+    if(atras) {
+        radianes = radianes + Math.PI;
     }
+  
+    console.log("X:" + objeto.position.x);
+    console.log("Y:" + objeto.position.y);
+    console.log("Cos(radianes):" + Math.cos(radianes));
+    console.log("Sin(radianes):" + Math.sin(radianes));
+
+    objeto.position.x += -5*Math.sin(radianes)
+    objeto.position.z += -5*Math.cos(radianes)
+}
+
+    
     
     function animate(){
         requestAnimationFrame(animate);
@@ -127,6 +145,8 @@ var copa_verde =new THREE.Mesh (copa,verde);
     } 
     crearCampoArboles(-2000,2000,-2000,2000,500)
     
+        
+     
     
     
     
