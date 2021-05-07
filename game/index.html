@@ -29,6 +29,7 @@ var cover = new THREE.MeshNormalMaterial(flat);
 var avatar = new THREE.Mesh(body,cover);
    // avatar.add(camera);
    // scene.add(avatar);
+   
     marcador.add (avatar);
     marcador.add (camera);
 
@@ -69,28 +70,31 @@ var leftHand = new THREE.Mesh(hand,cover);
     avatar.add(cabezon);
     
     
-    var isCartwheeling = false;
-    function animate(){
+    var isCartwheeling = true;
+    var isFlipping = true;
+    function animate(){      
         requestAnimationFrame(animate);
         if (isCartwheeling) {
-            avatar.rotation.z = avatar.rotation.z + 1;
+            avatar.rotation.z = avatar.rotation.z ;
+        }    
+        if (isFlipping){
+           avatar.rotation.z = avatar.rotation.z;
         }
-        renderer.render(scene,camera);
-    }
-    
+        renderer.render(scene, camera)
+   }
     animate();
     
         
    document.addEventListener('keydown', sendKeyDown);
 function sendKeyDown(event){
   var code = event.code;
-    if (code == 'ArrowLeft') marcador.rotation.y = marcador.rotation.y -= 0.05;
-    if (code == 'ArrowRight') marcador.rotation.y = marcador.rotation.y += 0.05;
+    if (code == 'ArrowLeft') marcador.rotation.y = marcador.rotation.y -= 0.025;
+    if (code == 'ArrowRight') marcador.rotation.y = marcador.rotation.y += 0.025;
     if (code == 'ArrowUp') avanzar(marcador,marcador.rotation.y , false);
     if (code == 'ArrowDown') avanzar(marcador,marcador.rotation.y, true)
    
     if (code == 'KeyC')isCartwheeling = !isCartwheeling;
-    if (code == 'KeyF') isFlipping = !isFlipping;
+    if (code == 'KeyFI') isFlipping = !isFlipping;
 }
    
 function avanzar(objeto,radianes,atras = false){
@@ -102,14 +106,22 @@ function avanzar(objeto,radianes,atras = false){
     console.log("Y:" + objeto.position.y);
     console.log("Cos(radianes):" + Math.cos(radianes));
     console.log("Sin(radianes):" + Math.sin(radianes));
-
-    objeto.position.x += -5*Math.sin(radianes)
-    objeto.position.z += -5*Math.cos(radianes)
+    
+    var inc_x = -5*Math.sin(radianes);
+    var inc_z = -5*Math.cos(radianes);
+    objeto.position.x += inc_x ;
+    objeto.position.z += inc_z;
+   
+    if (hayColision()){
+    objeto.position.x -=  inc_x ;
+    objeto.position.z -= inc_z;
+    }
 }
+    
 
     
     
-    function animate(){
+     function animate(){
         requestAnimationFrame(animate);
         avatar.rotation.z = avatar.rotation.z + 0.05;
         renderer.render(scene,camera);
@@ -118,6 +130,7 @@ function avanzar(objeto,radianes,atras = false){
     
     animate();
     // CREAR TRONCO
+   var noPermitido = [];
    function CrearArbol(x,z){
     var tronco = new THREE.CylinderGeometry(50,50, 200);
     var marron = new THREE.MeshBasicMaterial({color:'sienna'});
@@ -131,22 +144,43 @@ var copa_verde =new THREE.Mesh (copa,verde);
        copa_verde.position.y = 175;
        tronco_marron.add(copa_verde);
        tronco_marron.position.set(x,-75,z);
-       scene.add (tronco_marron);
+       
+       //Añadir circulo de control 
+       
+       
+    var circulo = new THREE.CircleGeometry(250);
+    var circulo_t = new THREE.MeshNormalMaterial();
+    var limite = new THREE.Mesh(circulo,circulo_t);   
+    limite.position.y = -100
+    limite.rotation.x= -Math.PI/2;
+    tronco_marron.add(limite) ;
+   
+    noPermitido.push(limite);
+    scene.add (tronco_marron);
    }
    // Crear un area rectangular donde hayan arboles plantados
     
     
    function crearCampoArboles(minimo_x,maximo_x,minimo_z,maximo_z,distancia_arboles){
     for (var x=minimo_x; x<=maximo_x; x= x+distancia_arboles){
-    for (var z=minimo_z; z<=maximo_z; z= z+distancia_arboles){
+    for (var z=minimo_z; z<=maximo_z; z= z+distancia_arboles){ 
          CrearArbol(x,z);  
     }
 }
     } 
-    crearCampoArboles(-2000,2000,-2000,2000,500)
+    crearCampoArboles(-2000,2000,-2000,2000,800)
     
-        
      
+    //que se choque el monigote
+    function hayColision () {
+    var vector = new THREE.Vector3(0, -1, 0);
+    var raycaster = new THREE.Raycaster (marcador.position, vector);
+   
+    var colisionados = raycaster.intersectObjects(noPermitido);
+    if (colisionados.length > 0) return true;
+   
+    return false;
+}
     
     
     
