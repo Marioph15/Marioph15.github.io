@@ -1,5 +1,6 @@
 <body></body>
 <script src="/lib/three.js"></script>
+<script src="/lib/scoreboard.js-master/Scoreboard.js"></script>
 <script>
   // The "scene" is where stuff in our game will happen:
   var scene = new THREE.Scene();
@@ -20,7 +21,25 @@
   document.body.appendChild(renderer.domElement);
 
   // ******** START CODING ON THE NEXT LINE ********
-  //marcador
+  
+    //scoreboard
+    
+    var scoreboard = new Scoreboard();
+    scoreboard.countdown(12);
+    scoreboard.score();
+    scoreboard.help(
+        "Arrow keys to move." +
+        "Space bar to jump fruit."+
+        "Watch for shaking trees with fruit."+
+        "Get near the tree and jump before the fruit is gone!"
+    );
+    scoreboard.onTimeExpired(timeExpired);
+    function timeExpired(){
+        scoreboard.message("Game Over noob!");
+    }
+      
+
+    //marcador
     var marcador =new THREE.Object3D();
     scene.add(marcador)
   //cuerpo
@@ -131,6 +150,7 @@ function avanzar(objeto,radianes,atras = false){
     animate();
     // CREAR TRONCO
    var noPermitido = [];
+   var treeTops = [];
    function CrearArbol(x,z){
     var tronco = new THREE.CylinderGeometry(50,50, 200);
     var marron = new THREE.MeshBasicMaterial({color:'sienna'});
@@ -156,6 +176,7 @@ var copa_verde =new THREE.Mesh (copa,verde);
     tronco_marron.add(limite) ;
    
     noPermitido.push(limite);
+       treeTops.push(top)
     scene.add (tronco_marron);
    }
    // Crear un area rectangular donde hayan arboles plantados
@@ -170,6 +191,13 @@ var copa_verde =new THREE.Mesh (copa,verde);
     } 
     crearCampoArboles(-2000,2000,-2000,2000,800)
     
+    //tesoro
+    
+    var treasureTreeNumbers;
+    function updateTreasureTreeNumber(){
+        var rand = Math.random()* treeTops.lenght;
+        treasureThreeNumber = Math.floor(rand);
+    }
      
     //que se choque el monigote
     function hayColision () {
