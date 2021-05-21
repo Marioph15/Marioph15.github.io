@@ -198,7 +198,26 @@ var copa_verde =new THREE.Mesh (copa,verde);
         var rand = Math.random()* treeTops.lenght;
         treasureThreeNumber = Math.floor(rand);
     }
-     
+     // sacudir el arbor
+    
+    function shakeTreasureTree(){
+        updateTreasureTreeNumber();
+        var tween = new TWEEN.Tween({shake:0});
+        tween.to({shake: 20 * 2 * Math.PI},8*1000);
+        tween.onUpdate(shakeTreeUpdate);
+        tween.onComplete(shakeTreeComplete);
+        tween.start();
+    }
+    function shakeTreeUpdate(update){
+        var copa = treeTops[treasureTreeNumber];
+        copa.position.x = 50 * Math.sin(update,shake);
+    }
+    function shakeTreeComplete(){
+        var copa = theeTops[treasureTreeNumber];
+        copa.position.x = 0;
+        setTimeout(shakeTreasureTree,2*1000)
+    }
+    shakeTreasureTree();
     //que se choque el monigote
     function hayColision () {
     var vector = new THREE.Vector3(0, -1, 0);
